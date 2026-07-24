@@ -616,16 +616,23 @@ h3 {
 }
 
 .pc-visual {
-  height: 250px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-display);
-  font-size: 15px;
-  color: var(--ink-faint);
-  position: relative;
   overflow: hidden;
-  transition: background 0.25s ease;
+  position: relative;
+  background: var(--surface);
+}
+
+.pc-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .pc-visual.tint-1::after {
