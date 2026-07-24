@@ -1,20 +1,20 @@
 // Disable right-click context menu
-document.addEventListener("contextmenu", (event) => event.preventDefault());
+// document.addEventListener("contextmenu", (event) => event.preventDefault());
 
-// Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, and Ctrl+U safely
-document.addEventListener("keydown", (e) => {
-  if (!e.key) return; // Prevent errors if e.key is undefined
+// // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, and Ctrl+U safely
+// document.addEventListener("keydown", (e) => {
+//   if (!e.key) return; // Prevent errors if e.key is undefined
 
-  const keyUpper = e.key.toUpperCase();
+//   const keyUpper = e.key.toUpperCase();
 
-  if (
-    keyUpper === "F12" ||
-    (e.ctrlKey && e.shiftKey && ["I", "J", "M"].includes(keyUpper)) ||
-    (e.ctrlKey && keyUpper === "U")
-  ) {
-    e.preventDefault();
-  }
-});
+//   if (
+//     keyUpper === "F12" ||
+//     (e.ctrlKey && e.shiftKey && ["I", "J", "M"].includes(keyUpper)) ||
+//     (e.ctrlKey && keyUpper === "U")
+//   ) {
+//     e.preventDefault();
+//   }
+// });
 
 // Theme toggle — dark is the default on load, no storage, resets to dark on refresh
 const root = document.documentElement;
@@ -40,9 +40,9 @@ tabList.querySelectorAll("a").forEach((a) => {
   });
 });
 
-// Active tab on scroll
 const sections = document.querySelectorAll("main section[id]");
 const navLinks = document.querySelectorAll(".tab-list a");
+
 const setActive = () => {
   let current = sections[0]?.id;
   const scrollPos = window.scrollY + 140;
@@ -59,7 +59,6 @@ const setActive = () => {
 window.addEventListener("scroll", setActive, { passive: true });
 setActive();
 
-// Scroll reveal
 const revealEls = document.querySelectorAll(".reveal");
 const io = new IntersectionObserver(
   (entries) => {
