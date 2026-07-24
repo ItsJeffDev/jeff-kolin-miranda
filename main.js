@@ -89,18 +89,17 @@ revealEls.forEach((el) => io.observe(el));
 // Footer year
 document.getElementById("year").textContent = new Date().getFullYear();
 
-
-//project 4 - temporary
+// temporary unavailable
 function projectUnavailable(event) {
   event.preventDefault();
 
   Swal.fire({
     icon: "info",
-    title: "Project 4",
+    title: "Currently Unavailable",
     html: `
-      <p>This project is currently unavailable for public viewing.</p>
+      <p>This feature is not available right now.</p>
       <br>
-      <p>Not yet!</p>
+      <p>Please try again later.</p>
     `,
     confirmButtonText: "OK",
     confirmButtonColor: "#41b883",
