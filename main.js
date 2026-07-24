@@ -88,3 +88,30 @@ revealEls.forEach((el) => io.observe(el));
 
 // Footer year
 document.getElementById("year").textContent = new Date().getFullYear();
+
+
+//project 4 - temporary
+function projectUnavailable(event) {
+  event.preventDefault();
+
+  Swal.fire({
+    icon: "info",
+    title: "Project 4",
+    html: `
+      <p>This project is currently unavailable for public viewing.</p>
+      <br>
+      <p>Not yet!</p>
+    `,
+    confirmButtonText: "OK",
+    confirmButtonColor: "#41b883",
+    width: "420px",
+
+    showClass: {
+      popup: "animate__animated animate__zoomIn"
+    },
+
+    hideClass: {
+      popup: "animate__animated animate__zoomOut"
+    }
+  });
+}
