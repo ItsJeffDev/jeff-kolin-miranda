@@ -616,7 +616,7 @@ h3 {
 }
 
 .pc-visual {
-  height: 160px;
+  height: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -628,38 +628,20 @@ h3 {
   transition: background 0.25s ease;
 }
 
-.pc-visual.tint-1 {
+.pc-visual.tint-1::after {
   background: var(--tint-1);
 }
 
-.pc-visual.tint-2 {
+.pc-visual.tint-2::after {
   background: var(--tint-2);
 }
 
-.pc-visual.tint-3 {
+.pc-visual.tint-3::after {
   background: var(--tint-3);
 }
 
-.pc-visual.tint-4 {
+.pc-visual.tint-4::after {
   background: var(--tint-4);
-}
-
-.pc-visual::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 22px 22px;
-  -webkit-mask-image: radial-gradient(circle at center, black, transparent 75%);
-  mask-image: radial-gradient(circle at center, black, transparent 75%);
-}
-
-.pc-visual span {
-  position: relative;
-  z-index: 1;
-  letter-spacing: 0.02em;
 }
 
 .pc-body {

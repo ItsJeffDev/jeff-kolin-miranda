@@ -16,14 +16,27 @@
 //   }
 // });
 
-// Theme toggle — dark is the default on load, no storage, resets to dark on refresh
+// Theme toggle with localStorage persistence
 const root = document.documentElement;
 const themeToggle = document.getElementById("themeToggle");
-root.setAttribute("data-theme", "dark");
+
+// Load saved theme (default: dark)
+const savedTheme = localStorage.getItem("theme") || "dark";
+root.setAttribute("data-theme", savedTheme);
+
+themeToggle.setAttribute("aria-pressed", String(savedTheme === "light"));
+
 themeToggle.addEventListener("click", () => {
-  const isLight = root.getAttribute("data-theme") === "light";
-  root.setAttribute("data-theme", isLight ? "dark" : "light");
-  themeToggle.setAttribute("aria-pressed", String(!isLight));
+  const currentTheme = root.getAttribute("data-theme");
+
+  const newTheme = currentTheme === "light" ? "dark" : "light";
+
+  root.setAttribute("data-theme", newTheme);
+
+  // Save user preference
+  localStorage.setItem("theme", newTheme);
+
+  themeToggle.setAttribute("aria-pressed", String(newTheme === "light"));
 });
 
 // Mobile menu toggle
