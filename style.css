@@ -706,6 +706,7 @@ h3 {
   gap: 36px;
 }
 
+
 .stack-col .stack-title {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -1008,5 +1009,17 @@ footer {
 
   .section-head h2 {
     font-size: 28px;
+  }
+}
+
+@media (max-width: 900px) {
+  .stack-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .stack-grid {
+    grid-template-columns: 1fr;
   }
 }
