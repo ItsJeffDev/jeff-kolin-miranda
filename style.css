@@ -992,7 +992,7 @@ footer {
   }
 
   .status-pill span.label {
-    display: none;
+    display: flex;
   }
 
   .hero {
