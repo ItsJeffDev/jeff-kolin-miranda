@@ -104,13 +104,13 @@ function projectUnavailable(event) {
     confirmButtonText: "OK",
     confirmButtonColor: "#41b883",
     width: "420px",
-
+    
     showClass: {
-      popup: "animate__animated animate__zoomIn"
+      popup: "animate__animated animate__backInDown",
     },
 
     hideClass: {
-      popup: "animate__animated animate__zoomOut"
-    }
+      popup: "animate__animated animate__backOutUp",
+    },
   });
 }
