@@ -682,6 +682,10 @@ h3 {
   color: var(--ink-soft);
 }
 
+.certi-tag {
+  background: var(--surface-2);
+}
+
 .pc-link {
   display: inline-flex;
   align-items: center;
@@ -1554,6 +1558,7 @@ footer {
 
 .j-item:nth-child(odd) .tag-row {
   justify-content: flex-end;
+  
 }
 
 .j-dot {
