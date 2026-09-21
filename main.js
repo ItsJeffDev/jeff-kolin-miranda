@@ -451,3 +451,122 @@ function projectUnavailable(event) {
   );
   counters.forEach((c) => statObserver.observe(c));
 })();
+
+/* ==========================================================
+   Résumé download — real PDF + success animation
+   ========================================================== */
+(function initResumeDownload() {
+  const RESUME_URL = "./files/Jeff-Kolin-Miranda-Resume.pdf";
+  const RESUME_FILE = "Jeff-Kolin-Miranda-Resume.pdf";
+
+  const triggers = document.querySelectorAll("[data-resume]");
+  if (!triggers.length) return;
+
+  /* ---------- toast ---------- */
+  let toast, toastTimer;
+
+  function buildToast() {
+    toast = document.createElement("div");
+    toast.className = "dl-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    toast.innerHTML = `
+      <span class="dl-toast-icon">
+        <svg viewBox="0 0 52 52" aria-hidden="true">
+          <circle class="dl-ring" cx="26" cy="26" r="23" />
+          <path class="dl-check" d="M15 27.5l7.5 7.5L37 20" />
+          <path class="dl-cross" d="M18 18l16 16M34 18L18 34" />
+        </svg>
+      </span>
+      <div class="dl-toast-text">
+        <b class="dl-toast-title"></b>
+        <span class="dl-toast-sub"></span>
+      </div>
+      <button class="dl-toast-close" type="button" aria-label="Close">&times;</button>
+      <span class="dl-toast-bar"></span>`;
+    document.body.appendChild(toast);
+    toast
+      .querySelector(".dl-toast-close")
+      .addEventListener("click", hideToast);
+  }
+
+  function showToast(title, sub, ok = true) {
+    if (!toast) buildToast();
+    clearTimeout(toastTimer);
+
+    toast.querySelector(".dl-toast-title").textContent = title;
+    toast.querySelector(".dl-toast-sub").textContent = sub;
+    toast.classList.toggle("is-error", !ok);
+
+    // restart the animations from the top
+    toast.classList.remove("show");
+    void toast.offsetWidth;
+    toast.classList.add("show");
+
+    toastTimer = setTimeout(hideToast, 4200);
+  }
+
+  function hideToast() {
+    clearTimeout(toastTimer);
+    toast && toast.classList.remove("show");
+  }
+
+  /* ---------- button state ---------- */
+  function setLoading(btn, loading) {
+    if (!btn) return;
+    btn.classList.toggle("is-loading", loading);
+    if (loading) {
+      btn.setAttribute("aria-busy", "true");
+    } else {
+      btn.removeAttribute("aria-busy");
+      btn.classList.add("is-done");
+      setTimeout(() => btn.classList.remove("is-done"), 1800);
+    }
+  }
+
+  /* ---------- save helper ---------- */
+  function saveFile(href, revoke) {
+    const a = document.createElement("a");
+    a.href = href;
+    a.download = RESUME_FILE;
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    if (revoke) setTimeout(() => URL.revokeObjectURL(href), 4000);
+  }
+
+  /* ---------- main handler ---------- */
+  async function handleDownload(e, btn) {
+    e.preventDefault();
+    if (btn.classList.contains("is-loading")) return;
+
+    setLoading(btn, true);
+
+    try {
+      const res = await fetch(RESUME_URL, { cache: "no-store" });
+      if (!res.ok) throw Object.assign(new Error("not found"), { http: true });
+
+      const blob = await res.blob();
+      saveFile(URL.createObjectURL(blob), true);
+
+      setLoading(btn, false);
+      showToast("Résumé downloaded", RESUME_FILE, true);
+    } catch (err) {
+      if (err && err.http) {
+        // the file really is missing on the server
+        setLoading(btn, false);
+        showToast("Download failed", "Please try again later.", false);
+        return;
+      }
+      // fetch blocked (e.g. opened via file://) — fall back to a plain link
+      saveFile(RESUME_URL, false);
+      setLoading(btn, false);
+      showToast("Résumé downloaded", RESUME_FILE, true);
+    }
+  }
+
+  triggers.forEach((btn) => {
+    btn.addEventListener("click", (e) => handleDownload(e, btn));
+  });
+})();

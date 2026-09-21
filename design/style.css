@@ -1813,3 +1813,253 @@ footer {
     flex-wrap: wrap;
   }
 }
+
+/* ==========================================================
+   Résumé download — button state + success toast
+   ========================================================== */
+.btn .btn-ic {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+#resumeBtn .btn-ic {
+  width: 15px;
+  height: 15px;
+}
+
+/* downloading state */
+.btn.is-loading {
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.btn.is-loading .btn-ic {
+  animation: dlBounce 0.7s ease-in-out infinite;
+}
+
+.btn.is-done .btn-ic {
+  animation: dlPop 0.5s ease;
+}
+
+.btn.is-done {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@keyframes dlBounce {
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+}
+
+@keyframes dlPop {
+  0% {
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* toast */
+.dl-toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 290px;
+  max-width: calc(100vw - 44px);
+  padding: 14px 44px 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-panel);
+  font-family: var(--font-body);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(18px) scale(0.96);
+  transition:
+    opacity 0.28s ease,
+    transform 0.32s cubic-bezier(0.22, 1.2, 0.36, 1),
+    visibility 0.28s;
+}
+
+.dl-toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.dl-toast-icon {
+  display: block;
+  flex: none;
+}
+
+.dl-toast-icon svg {
+  width: 38px;
+  height: 38px;
+  flex: none;
+  display: block;
+}
+
+.dl-ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-dasharray: 152;
+  stroke-dashoffset: 152;
+}
+
+.dl-check,
+.dl-cross {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+}
+
+.dl-cross {
+  display: none;
+}
+
+.dl-toast.show .dl-ring {
+  animation: dlRing 0.55s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.dl-toast.show .dl-check {
+  animation: dlCheck 0.4s 0.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.dl-toast.show .dl-toast-icon {
+  animation: dlPop 0.5s 0.55s ease both;
+}
+
+/* error variant */
+.dl-toast.is-error {
+  border-color: rgba(239, 68, 68, 0.45);
+}
+
+.dl-toast.is-error .dl-ring,
+.dl-toast.is-error .dl-cross {
+  stroke: #ef4444;
+}
+
+.dl-toast.is-error .dl-check {
+  display: none;
+}
+
+.dl-toast.is-error .dl-cross {
+  display: block;
+}
+
+.dl-toast.is-error.show .dl-cross {
+  animation: dlCheck 0.4s 0.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.dl-toast.is-error .dl-toast-bar {
+  background: #ef4444;
+}
+
+@keyframes dlRing {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dlCheck {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.dl-toast-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.dl-toast-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.dl-toast-sub {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dl-toast-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--ink-faint);
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 6px;
+}
+
+.dl-toast-close:hover {
+  color: var(--ink);
+}
+
+.dl-toast-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.dl-toast.show .dl-toast-bar {
+  animation: dlBar 4.2s linear forwards;
+}
+
+@keyframes dlBar {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@media (max-width: 720px) {
+  #resumeBtn {
+    display: none;
+  }
+
+  .dl-toast {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    min-width: 0;
+  }
+}
