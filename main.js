@@ -1,20 +1,20 @@
-// // Disable right-click context menu
-// document.addEventListener("contextmenu", (event) => event.preventDefault());
+// Disable right-click context menu
+document.addEventListener("contextmenu", (event) => event.preventDefault());
 
-// // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, and Ctrl+U safely
-// document.addEventListener("keydown", (e) => {
-//   if (!e.key) return; // Prevent errors if e.key is undefined
+// Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, and Ctrl+U safely
+document.addEventListener("keydown", (e) => {
+  if (!e.key) return; // Prevent errors if e.key is undefined
 
-//   const keyUpper = e.key.toUpperCase();
+  const keyUpper = e.key.toUpperCase();
 
-//   if (
-//     keyUpper === "F12" ||
-//     (e.ctrlKey && e.shiftKey && ["I", "J", "M"].includes(keyUpper)) ||
-//     (e.ctrlKey && keyUpper === "U")
-//   ) {
-//     e.preventDefault();
-//   }
-// });
+  if (
+    keyUpper === "F12" ||
+    (e.ctrlKey && e.shiftKey && ["I", "J", "M"].includes(keyUpper)) ||
+    (e.ctrlKey && keyUpper === "U")
+  ) {
+    e.preventDefault();
+  }
+});
 
 // Theme toggle with localStorage persistence
 const root = document.documentElement;
