@@ -1235,9 +1235,47 @@ footer {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* NOTE: never use justify-content:center here. When the content is taller
+     than the card, centred overflow spills off BOTH ends and the top part
+     becomes unreachable (scrollTop can't go negative). The auto margins below
+     centre short content and collapse to 0 once it overflows. */
+  justify-content: flex-start;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.cert-back-inner > * {
+  flex-shrink: 0;
+}
+
+.cert-back-inner > :first-child {
+  margin-top: auto;
+}
+
+.cert-back-inner > :last-child {
+  margin-bottom: auto;
+}
+
+.cert-back-inner::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cert-back-inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cert-back-inner::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 999px;
+}
+
+.cert-back-inner::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 
 .cert-back-inner h3 {
@@ -1750,7 +1788,21 @@ footer {
   }
 
   .cert-back-inner {
-    padding: 18px;
+    padding: 16px;
+  }
+
+  .cert-back-inner h3 {
+    font-size: 17px;
+  }
+
+  .cert-back-inner p {
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+
+  .cert-meta {
+    gap: 10px;
+    margin-bottom: 14px;
   }
 
   .cert-bar {
